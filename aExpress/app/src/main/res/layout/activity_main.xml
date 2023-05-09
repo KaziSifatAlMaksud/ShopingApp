@@ -31,8 +31,10 @@
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="40dp"
         android:layout_marginTop="8dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -55,9 +57,9 @@
                     android:id="@+id/carousel"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    app:showNavigationButtons="false"
+                    app:autoPlay="true"
                     app:showCaption="false"
-                    app:autoPlay="true"/>
+                    app:showNavigationButtons="false" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -81,5 +83,19 @@
                 android:layout_marginTop="16dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/backgroundColor"
+        app:itemIconTint="@drawable/item_selector"
+        app:itemRippleColor="@android:color/transparent"
+        app:itemTextColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/item_manu" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,11 +1,18 @@
 package com.example.aexpress.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -21,6 +28,7 @@ import com.example.aexpress.databinding.ActivityMainBinding;
 import com.example.aexpress.model.Category;
 import com.example.aexpress.model.Product;
 import com.example.aexpress.utils.Constants;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
@@ -31,6 +39,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    InternetConnectionChangeReceiver internetConnectionChangeReceiver = new InternetConnectionChangeReceiver();
 
     ActivityMainBinding binding;
     CategoryAdapter categoryAdapter;
@@ -68,7 +77,34 @@ public class MainActivity extends AppCompatActivity {
         initCategories();
         initProducts();
         initSlider();
+        bottom_navigation();
     }
+
+    void bottom_navigation() {
+        binding.bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.cartview:
+                        Intent intent = new Intent(MainActivity.this, CartActivity.class);
+                        startActivity(intent);
+
+
+                        break;
+                    case R.id.profile:
+                        Toast.makeText(MainActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+
+                }
+                return true;
+            }
+        });
+    }
+
 
     private void initSlider() {
         getRecentOffers();
@@ -182,6 +218,21 @@ public class MainActivity extends AppCompatActivity {
         }, error -> {});
         queue.add(request);
     }
+
+// daynamic Broadcast Receiver
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(internetConnectionChangeReceiver, filter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(internetConnectionChangeReceiver);
+    }
+
 
     void initProducts() {
         products = new ArrayList<>();

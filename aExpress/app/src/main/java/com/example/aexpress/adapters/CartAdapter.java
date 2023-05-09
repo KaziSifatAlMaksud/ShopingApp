@@ -56,7 +56,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 .into(holder.binding.image);
 
         holder.binding.name.setText(product.getName());
-        holder.binding.price.setText("PKR " + product.getPrice());
+        holder.binding.price.setText("BDT " + product.getPrice());
         holder.binding.quantity.setText(product.getQuantity() + " item(s)");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

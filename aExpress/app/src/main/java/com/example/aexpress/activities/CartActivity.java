@@ -1,18 +1,24 @@
 package com.example.aexpress.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.aexpress.R;
 import com.example.aexpress.adapters.CartAdapter;
 import com.example.aexpress.databinding.ActivityCartBinding;
 import com.example.aexpress.model.Product;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hishd.tinycart.model.Cart;
 import com.hishd.tinycart.model.Item;
 import com.hishd.tinycart.util.TinyCartHelper;
@@ -32,6 +38,8 @@ public class CartActivity extends AppCompatActivity {
         binding = ActivityCartBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
+        bottom_navigation();
         products = new ArrayList<>();
 
         Cart cart = TinyCartHelper.getCart();
@@ -47,7 +55,7 @@ public class CartActivity extends AppCompatActivity {
         adapter = new CartAdapter(this, products, new CartAdapter.CartListener() {
             @Override
             public void onQuantityChanged() {
-                binding.subtotal.setText(String.format("PKR %.2f",cart.getTotalPrice()));
+                binding.subtotal.setText(String.format("%.2f BDT",cart.getTotalPrice()));
             }
         });
 
@@ -58,7 +66,7 @@ public class CartActivity extends AppCompatActivity {
         binding.cartList.setAdapter(adapter);
 
 
-        binding.subtotal.setText(String.format("PKR %.2f",cart.getTotalPrice()));
+        binding.subtotal.setText(String.format("%.2f BDT",cart.getTotalPrice()));
 
 
         binding.continueBtn.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +78,28 @@ public class CartActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+    void bottom_navigation() {
+        binding.bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        Intent intent = new Intent(CartActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.cartview:
+                        break;
+                    case R.id.profile:
+                        Toast.makeText(CartActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+
+                }
+                return true;
+            }
+        });
+    }
+
 
     @Override
     public boolean onSupportNavigateUp() {
