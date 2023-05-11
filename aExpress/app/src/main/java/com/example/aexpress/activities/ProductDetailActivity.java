@@ -52,7 +52,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                 Html.fromHtml("<b>Product Name:</b> <t/>" + name + "<br/> <br/> <b>Product Price:</b> <t/> " + price + "BDT")
         );
 
-       // binding.productDescription.setText( "Product Name: " + name +"\nProduct Price: "+ price );
 
         Glide.with(this)
                 .load(image)
@@ -93,7 +92,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     void getProductDetails(int id) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://lgorithmbd.com/php_rest_app/api/products/read.php?id=" + id;
+        String url = "https://lgorithmbd.com/php_rest_app/api/products/read.php";
 
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -102,26 +101,29 @@ public class ProductDetailActivity extends AppCompatActivity {
                     JSONObject object = new JSONObject(response);
                     JSONArray dataArray = object.getJSONArray("data");
                     if(dataArray.length() > 0) {
-                        JSONObject productObject = dataArray.getJSONObject(0);
-                        String productId = productObject.getString("id");
-                        String name = productObject.getString("name");
-                        String image = productObject.getString("image");
-                        String price = productObject.getString("price");
-                        String price_discount = productObject.getString("price_discount");
-                        String stock = productObject.getString("stock");
-                        String draft = productObject.getString("draft");
-                        String status = productObject.getString("status");
-                        System.out.println( "sifat "+ productId + name + price + stock);
+                        // Loop through the array and find the product with matching id
+                        for (int i = 0; i < dataArray.length(); i++) {
+                            JSONObject productObject = dataArray.getJSONObject(i);
+                            String productId = productObject.getString("id");
+                            if (Integer.parseInt(productId) == id) {
+                                String name = productObject.getString("name");
+                                String image = productObject.getString("image");
+                                String price = productObject.getString("price");
+                                String price_discount = productObject.getString("price_discount");
+                                String stock = productObject.getString("stock");
+                                String draft = productObject.getString("draft");
+                                String status = productObject.getString("status");
 
-                        currentProduct = new Product(
-                                name,
-                                Constants.PRODUCTS_IMAGE_URL + image,
-                                status,
-                                Double.parseDouble(price),
-                                Double.parseDouble(price_discount),
-                                Integer.parseInt(stock),
-                                Integer.parseInt(productId)
-                        );
+                                currentProduct = new Product( name,Constants.PRODUCTS_IMAGE_URL + image,
+                                        draft,
+                                        Double.parseDouble(price),
+                                        Double.parseDouble(price_discount),
+                                        Integer.parseInt(stock),
+                                        Integer.parseInt(productId)
+                                );
+                                break;
+                            }
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -136,6 +138,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         queue.add(request);
     }
+
 
     /*
     void getProductDetails(int id) {

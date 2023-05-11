@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:mt_hint="Search your favorite product"
-            app:mt_placeholder="aExpress"
+            app:mt_placeholder="Gadget Shop"
             app:mt_navIconEnabled="true"
             app:mt_maxSuggestionsCount="10"
             app:mt_speechMode="true" />
@@ -75,6 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp" />
             </androidx.cardview.widget.CardView>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/productList"

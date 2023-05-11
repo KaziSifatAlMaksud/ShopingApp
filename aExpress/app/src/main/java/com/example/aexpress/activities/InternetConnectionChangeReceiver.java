@@ -17,10 +17,10 @@ public class InternetConnectionChangeReceiver extends BroadcastReceiver{
             boolean isInternetConnected = isNetworkAvailable(context);
             if (isInternetConnected) {
                 // Internet connection is available
-                Toast.makeText(context, "Internet connection is ON", Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(context, "Internet connection is ON", Toast.LENGTH_SHORT).show();
             } else {
                 // Internet connection is not available
-                Toast.makeText(context, "Internet connection is OFF", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "No Internet connection. \n Please Check Your Internet Connection.", Toast.LENGTH_SHORT).show();
 
 
 

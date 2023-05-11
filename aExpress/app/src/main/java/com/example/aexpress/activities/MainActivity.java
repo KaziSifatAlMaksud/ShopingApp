@@ -130,8 +130,8 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Log.e("err", response);
                     JSONObject mainObj = new JSONObject(response);
-                    if(mainObj.getString("status").equals("success")) {
-                        JSONArray categoriesArray = mainObj.getJSONArray("categories");
+                //    if(mainObj.getString("status").equals("success")) {
+                        JSONArray categoriesArray = mainObj.getJSONArray("data");
                         for(int i =0; i< categoriesArray.length(); i++) {
                             JSONObject object = categoriesArray.getJSONObject(i);
                             Category category = new Category(
@@ -144,9 +144,9 @@ public class MainActivity extends AppCompatActivity {
                             categories.add(category);
                         }
                         categoryAdapter.notifyDataSetChanged();
-                    } else {
+                //    } else {
                         // DO nothing
-                    }
+                //    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
             try {
                 JSONObject object = new JSONObject(response);
-              //  if(object.getString("status").equals("success")){
+            //  if(object.getString("status").equals("success")){
                     JSONArray productsArray = object.getJSONArray("data");
                     for(int i =0; i< productsArray.length(); i++) {
                         JSONObject childObj = productsArray.getJSONObject(i);
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                         products.add(product);
                     }
                     productAdapter.notifyDataSetChanged();
-              //  }
+             //  }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
