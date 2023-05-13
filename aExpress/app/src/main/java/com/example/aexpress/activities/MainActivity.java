@@ -91,11 +91,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.cartview:
                         Intent intent = new Intent(MainActivity.this, CartActivity.class);
                         startActivity(intent);
-
-
                         break;
                     case R.id.profile:
-                        Toast.makeText(MainActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+                        Intent i2 = new Intent(MainActivity.this, ProfileActivity.class);
+                        startActivity(i2);
                         break;
                     default:
 
@@ -130,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Log.e("err", response);
                     JSONObject mainObj = new JSONObject(response);
-                //    if(mainObj.getString("status").equals("success")) {
                         JSONArray categoriesArray = mainObj.getJSONArray("data");
                         for(int i =0; i< categoriesArray.length(); i++) {
                             JSONObject object = categoriesArray.getJSONObject(i);
@@ -144,9 +142,7 @@ public class MainActivity extends AppCompatActivity {
                             categories.add(category);
                         }
                         categoryAdapter.notifyDataSetChanged();
-                //    } else {
-                        // DO nothing
-                //    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -168,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
             try {
                 JSONObject object = new JSONObject(response);
-            //  if(object.getString("status").equals("success")){
+
                     JSONArray productsArray = object.getJSONArray("data");
                     for(int i =0; i< productsArray.length(); i++) {
                         JSONObject childObj = productsArray.getJSONObject(i);
@@ -185,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                         products.add(product);
                     }
                     productAdapter.notifyDataSetChanged();
-             //  }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -200,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.GET, Constants.GET_OFFERS_URL, response -> {
             try {
                 JSONObject object = new JSONObject(response);
-            //    if(object.getString("status").equals("success")) {
+
                     JSONArray offerArray = object.getJSONArray("data");
                     for(int i =0; i < offerArray.length(); i++) {
                         JSONObject childObj =  offerArray.getJSONObject(i);
@@ -211,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                                 )
                         );
                     }
-               // }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

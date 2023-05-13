@@ -90,7 +90,8 @@ public class CartActivity extends AppCompatActivity {
                     case R.id.cartview:
                         break;
                     case R.id.profile:
-                        Toast.makeText(CartActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(CartActivity.this, ProfileActivity.class);
+                        startActivity(i);
                         break;
                     default:
 

@@ -14,8 +14,18 @@
         android:theme="@style/Theme.AExpress"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Profile"
+            android:name=".Signup"
             android:exported="false" />
+        <activity
+            android:name=".activities.YourOffers"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Websideview"
+            android:exported="true" />
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AExpress.Actionbar" />
         <activity
             android:name=".activities.SearchActivity"
             android:exported="false"

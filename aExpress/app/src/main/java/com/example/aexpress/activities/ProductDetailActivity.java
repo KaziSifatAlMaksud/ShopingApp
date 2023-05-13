@@ -49,7 +49,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         double price = getIntent().getDoubleExtra("price",0);
 
         binding.productDescription.setText(
-                Html.fromHtml("<b>Product Name:</b> <t/>" + name + "<br/> <br/> <b>Product Price:</b> <t/> " + price + "BDT")
+                Html.fromHtml("<b>Product Name:</b> <t/>" + name + "<br/> <br/> <b>Product Price:</b> <t/> " + price + " BDT  <t/> <br> Fetcher:</t>"  )
         );
 
 

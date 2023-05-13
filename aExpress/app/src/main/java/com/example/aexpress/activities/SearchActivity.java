@@ -57,14 +57,15 @@ public class SearchActivity extends AppCompatActivity {
     void getProducts(String query) {
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String url = Constants.GET_PRODUCTS_URL + "?q=" + query;
+        String url = "https://lgorithmbd.com/php_rest_app/api/products/read.php?q=" + query; // Append query parameter to URL
         StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
             try {
                 JSONObject object = new JSONObject(response);
-                if(object.getString("status").equals("success")){
-                    JSONArray productsArray = object.getJSONArray("products");
-                    for(int i =0; i< productsArray.length(); i++) {
-                        JSONObject childObj = productsArray.getJSONObject(i);
+                JSONArray productsArray = object.getJSONArray("data");
+                for (int i = 0; i < productsArray.length(); i++) {
+                    JSONObject childObj = productsArray.getJSONObject(i);
+                    String name = childObj.getString("name");
+                    if (name.equalsIgnoreCase(query)) {
                         Product product = new Product(
                                 childObj.getString("name"),
                                 Constants.PRODUCTS_IMAGE_URL + childObj.getString("image"),
@@ -73,17 +74,20 @@ public class SearchActivity extends AppCompatActivity {
                                 childObj.getDouble("price_discount"),
                                 childObj.getInt("stock"),
                                 childObj.getInt("id")
-
                         );
                         products.add(product);
                     }
-                    productAdapter.notifyDataSetChanged();
                 }
+                productAdapter.notifyDataSetChanged();
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> { });
+        }, error -> {
+            error.printStackTrace(); // Add error handling
+        });
 
         queue.add(request);
     }
+
 }
